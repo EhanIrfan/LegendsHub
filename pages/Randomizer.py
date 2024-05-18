@@ -589,7 +589,7 @@ if randfighter:
     hold2 = []
     for fighter in selected_fighters:
         # Rewrite the name of the image file with removing all the useless stuff
-        img = (fighter.color.lower() + fighter.rarity.lower() +
+        img = "images/" + (fighter.color.lower() + fighter.rarity.lower() +
                fighter.name.lower().replace(" ", "")
                .replace(":", "").replace("(", "")
                .replace(")", "") + ".png")
@@ -598,11 +598,11 @@ if randfighter:
         image = Image.open(img)
         new_image = image.resize(image_dimensions)
 
-        colim = Image.open(fighter.color.lower() + ".png")
+        colim = Image.open("images/" + fighter.color.lower() + ".png")
         newcol = colim.resize(image_dimensions)
 
         # Get the rarity picture
-        temp = Image.open(fighter.rarity.lower() + ".png").resize(image_dimensions)
+        temp = Image.open("images/" + fighter.rarity.lower() + ".png").resize(image_dimensions)
 
         final_im = Image.alpha_composite(new_image, temp)
 
