@@ -88,7 +88,7 @@ with open("data.csv") as file:
             ztags.append(ztag)
 
         # Rewrite the name of the image file with removing all the useless stuff
-        img = col.lower() + rar.lower() + nam.lower().replace(" ", "").replace(":", "").replace("(", "").replace(")", "") + ".png"
+        img = "images/" + col.lower() + rar.lower() + nam.lower().replace(" ", "").replace(":", "").replace("(", "").replace(")", "") + ".png"
 
         fighters.append(Fighter(rar, nam, col, tags, ztags, img, epi, dbl))
 
