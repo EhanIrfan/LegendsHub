@@ -88,7 +88,7 @@ with open("data.csv") as file:
             ztags.append(ztag)
 
         # Rewrite the name of the image file with removing all the useless stuff
-        img = "images/" + col.lower() + rar.lower() + nam.lower().replace(" ", "").replace(":", "").replace("(", "").replace(")", "") + ".png"
+        img = col.lower() + rar.lower() + nam.lower().replace(" ", "").replace(":", "").replace("(", "").replace(")", "") + ".png"
 
         fighters.append(Fighter(rar, nam, col, tags, ztags, img, epi, dbl))
 
@@ -172,7 +172,7 @@ if st.session_state.begin:
     if submit:
         if guessed_char == str(st.session_state.selected_char):
             st.session_state.begin = False
-            st.image(st.session_state.selected_char.img)
+            st.image("images/" + st.session_state.selected_char.img)
             st.write("That is correct")
             st.write("That took " + str(st.session_state.guesses + 1) + " guesses")
         else:
