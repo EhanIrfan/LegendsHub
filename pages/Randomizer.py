@@ -611,7 +611,7 @@ if randfighter:
         # Add the sparking image for LL's
         if fighter.rarity == "LL":
             # Open the sparking image
-            temp = Image.open("sparking.png")
+            temp = Image.open("images/sparking.png")
             # Apply the sparking image on the LL
             final_im = Image.alpha_composite(final_im,temp)
 
