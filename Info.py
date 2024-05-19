@@ -1,4 +1,4 @@
-HtmlFile = open("hold.html", ‘r’, encoding=‘utf-8’)
+HtmlFile = open("hold.html", 'r', encoding='utf-8')
 source_code = HtmlFile.read()
 print(source_code)
 components.html(source_code, height=600)
