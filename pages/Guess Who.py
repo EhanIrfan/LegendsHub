@@ -153,8 +153,8 @@ if start_game:
         st.session_state.info_to_give.append("The fighter is a character claimed from an event")
     else:
         num = st.session_state.selected_char.dbl[3:5]
-        year = int(num) // 12 + 2018
-        month = int(num) % 12
+        year = int(num) + 5 // 12 + 2018
+        month = int(num) + 5 % 12
         st.session_state.info_to_give.append("This character came out in " + months[month] + " " + str(year))
 
     st.session_state.info_to_give.append("This character is a " + st.session_state.selected_char.color + " character")
