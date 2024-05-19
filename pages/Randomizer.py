@@ -1,3 +1,6 @@
+import streamlit as st
+import streamlit.components.v1 as components
+
 HtmlFile = open("test.html", 'r', encoding='utf-8')
 source_code = HtmlFile.read()
 print(source_code)
@@ -8,7 +11,6 @@ from typing import Optional
 
 from typing import Any
 
-import streamlit as st
 class Fighter:
     """
     A class for a fighter
