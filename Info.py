@@ -1,5 +1,10 @@
 import streamlit as st
 
+HtmlFile = open(“hold.html”, ‘r’, encoding=‘utf-8’)
+source_code = HtmlFile.read()
+print(source_code)
+components.html(source_code, height=600)
+
 st.set_page_config(
     page_title="DBL"
 )
