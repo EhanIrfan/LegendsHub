@@ -1,7 +1,8 @@
+import time
 from typing import Any, List
-
 import streamlit as st
 from PIL import Image
+
 from streamlit_server_state import server_state, server_state_lock
 import random
 from streamlit.runtime.scriptrunner.script_run_context import add_script_run_ctx
@@ -148,7 +149,7 @@ st.title("Guess Who Multiplayer Game")
 
 # Add auto-refresh every 1 second
 add_script_run_ctx(st.session_state)
-st_autorefresh(interval=2000, limit=None, key="auto_refresh")
+st_autorefresh(interval=1000, limit=None, key="auto_refresh")
 
 # Initialize server state for rooms
 with server_state_lock["rooms"]:
@@ -164,8 +165,29 @@ def init_room(room_id):
         'selected_characters': {},  # Dictionary to hold each player's selected character
         'turn': None,  # Whose turn it is to guess
         'guesses': {},  # Dictionary to hold guesses
-        'chat': []  # List to hold chat messages
+        'chat': [],  # List to hold chat messages
+        'last_guess_time': time.time(),
+        'timer_start' : time.time()
     }
+
+# Function to check and remove inactive rooms
+def remove_inactive_rooms():
+    current_time = time.time()
+    with server_state_lock["rooms"]:
+        inactive_rooms = []
+        for room_id, room in server_state.rooms.items():
+            # Check if no guess has been made for 120 seconds
+            if current_time - room['last_guess_time'] > 120:
+                inactive_rooms.append(room_id)
+
+        for room_id in inactive_rooms:
+            del server_state.rooms[room_id]
+            if 'room_id' in st.session_state and st.session_state.room_id == room_id:
+                del st.session_state.room_id
+            st.warning(f"Room '{room_id}' has been closed due to inactivity or no players.")
+
+# Periodically check for inactive rooms
+remove_inactive_rooms()
 
 # Room selection/creation
 action = st.radio("Do you want to create a new room or join an existing one?", ("Create", "Join"))
@@ -211,7 +233,7 @@ if 'room_id' in st.session_state and 'player_name' in st.session_state:
     st.subheader(f"Room: {room_id}")
     st.write("Players in the room:")
     for player in room['players']:
-        st.write(player + ": " + str(room['players'][player_name]['score']) + " wins")
+        st.write(player + ": " + str(room['players'][player]['score']) + " wins")
 
     # Game start condition
     if not room['game_started']:
@@ -229,6 +251,7 @@ if 'room_id' in st.session_state and 'player_name' in st.session_state:
 
     # Character selection
     if room['game_started']:
+        room['last_guess_time'] = time.time()
         if player_name not in room['selected_characters']:
             selected_character = st.selectbox("Select your character:", room['character_images'])
             if st.button("Submit Character"):
@@ -270,20 +293,34 @@ if 'room_id' in st.session_state and 'player_name' in st.session_state:
             # Guessing process
             if player_name == room['turn']:
                 guess = st.selectbox("Guess the opponent's character:", room['character_images'])
+
                 if st.button("Submit Guess"):
                     with server_state_lock["rooms"]:
                         opponent = [p for p in room['players'] if p != player_name][0]
                         room['guesses'][player_name] = guess
+                        room['last_guess_time'] = time.time()
+                        room['timer_start'] = time.time()
                         if guess == str(room['selected_characters'][opponent]):
                             st.success("Correct! You win!")
                             room['players'][player_name]['score'] += 1
                             room['game_started'] = False  # End the game
-                            room['selected_characters'] =  {}
+                            room['selected_characters'] = {}
                         else:
                             st.error("Incorrect. Opponent's turn.")
                             room['turn'] = opponent
             else:
                 st.write("The opponent is making their guess...")
+
+        # Timer display
+        current_time = time.time()
+        time_remaining = 120 - (current_time - room['timer_start'])
+        if time_remaining <= 0:
+            st.warning("Time's up! The game has ended due to inactivity.")
+            with server_state_lock["rooms"]:
+                room['game_started'] = False
+        else:
+            minutes, seconds = divmod(time_remaining, 60)
+            st.write(f"Time remaining: {int(minutes)}:{int(seconds):02d}")
 
     # Chat room
     st.subheader("Chat Room")
