@@ -278,6 +278,7 @@ if 'room_id' in st.session_state and 'player_name' in st.session_state:
                             st.success("Correct! You win!")
                             room['players'][player_name]['score'] += 1
                             room['game_started'] = False  # End the game
+                            room['selected_characters'] =  {}
                         else:
                             st.error("Incorrect. Opponent's turn.")
                             room['turn'] = opponent
