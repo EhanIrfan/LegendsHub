@@ -195,7 +195,7 @@ if give_up:
     st.session_state.begin = False
     st.session_state.guesses = 0
     hold = st.session_state.selected_char.name + " - " + st.session_state.selected_char.dbl
-    st.image(st.session_state.selected_char.img)
+    st.image("images/" + st.session_state.selected_char.img)
     st.session_state.selected_char = None
     st.session_state.info_to_give = []
     st.session_state.char_rar_check = char_rar.copy()
