@@ -1,2 +1,3 @@
 streamlit-autorefresh==1.0.1
 streamlit-server-state==0.17.1
+streamlit==1.30.0
