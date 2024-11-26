@@ -256,6 +256,7 @@ if 'room_id' in st.session_state and 'player_name' in st.session_state:
             selected_character = st.selectbox("Select your character:", room['character_images'])
             if st.button("Submit Character"):
                 room['last_guess_time'] = time.time()
+                room['timer_start'] = time.time()
                 with server_state_lock["rooms"]:
                     room['selected_characters'][player_name] = get_fighter_by_name(selected_character)
                     st.success(f"{selected_character}' selected!")
