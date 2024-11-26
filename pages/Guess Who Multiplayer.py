@@ -147,9 +147,9 @@ def create_fighter_image(fighter: Fighter):
 
 st.title("Guess Who Multiplayer Game")
 
-# Add auto-refresh every 2 seconds
+# Add auto-refresh every second
 add_script_run_ctx(st.session_state)
-st_autorefresh(interval=2000, limit=None, key="auto_refresh")
+st_autorefresh(interval=1000, limit=None, key="auto_refresh")
 
 # Initialize server state for rooms
 with server_state_lock["rooms"]:
@@ -255,6 +255,7 @@ if 'room_id' in st.session_state and 'player_name' in st.session_state:
         if player_name not in room['selected_characters']:
             selected_character = st.selectbox("Select your character:", room['character_images'])
             if st.button("Submit Character"):
+                room['last_guess_time'] = time.time()
                 with server_state_lock["rooms"]:
                     room['selected_characters'][player_name] = get_fighter_by_name(selected_character)
                     st.success(f"{selected_character}' selected!")
