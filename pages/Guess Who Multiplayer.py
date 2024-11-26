@@ -147,9 +147,9 @@ def create_fighter_image(fighter: Fighter):
 
 st.title("Guess Who Multiplayer Game")
 
-# Add auto-refresh every 1 second
+# Add auto-refresh every 2 seconds
 add_script_run_ctx(st.session_state)
-st_autorefresh(interval=1000, limit=None, key="auto_refresh")
+st_autorefresh(interval=2000, limit=None, key="auto_refresh")
 
 # Initialize server state for rooms
 with server_state_lock["rooms"]:
@@ -313,7 +313,7 @@ if 'room_id' in st.session_state and 'player_name' in st.session_state:
 
         # Timer display
         current_time = time.time()
-        time_remaining = 120 - (current_time - room['timer_start'])
+        time_remaining = 300 - (current_time - room['timer_start'])
         if time_remaining <= 0:
             st.warning("Time's up! The game has ended due to inactivity.")
             with server_state_lock["rooms"]:
