@@ -316,7 +316,7 @@ char_tags = ["Saiyan", "Hybrid Saiyan", "Super Saiyan", "Super Saiyan 2",
              "Absorption", "Fusion", "Potara", "Rival Universe",
              "Universe 2", "Universe 4", "Universe 6", "Universe 9",
              "Universe 11", "Universe Rep", "DB", "Event Exclusive",
-             "Legends Road", "Game Originals"]
+             "Legends Road", "Game Originals", "Weapon Wielder"]
 
 char_epi = ["Dragon Ball Saga", "Saiyan Saga (Z)", "Frieza Saga (Z)",
             "Android Saga (Z)", "Cell Saga (Z)", "Majin Buu Saga (Z)",
@@ -327,7 +327,7 @@ char_epi = ["Dragon Ball Saga", "Saiyan Saga (Z)", "Frieza Saga (Z)",
             "God of Destruction Champa Saga (S)", "Future Trunks Saga (S)",
             "Universe Survival Saga (S)", "Movies",
             "Anime Originals Saga", "DRAGON BALL FighterZ",
-            "Dragon Ball Z: Kakarot"]
+            "Dragon Ball Z: Kakarot", "DAIMA"]
 
 char_col = ["Red", "Yellow", "Purple", "Green", "Blue"]
 
