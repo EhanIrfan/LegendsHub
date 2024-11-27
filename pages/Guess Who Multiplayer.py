@@ -176,8 +176,8 @@ def remove_inactive_rooms():
     with server_state_lock["rooms"]:
         inactive_rooms = []
         for room_id, room in server_state.rooms.items():
-            # Check if no guess has been made for 120 seconds
-            if current_time - room['last_guess_time'] > 120:
+            # Check if no guess has been made for 600 seconds
+            if current_time - room['last_guess_time'] > 600:
                 inactive_rooms.append(room_id)
 
         for room_id in inactive_rooms:
